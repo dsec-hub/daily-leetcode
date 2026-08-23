@@ -1,0 +1,39 @@
+name: Docker Compose Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: [self-hosted, linux]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          clean: true
+          fetch-depth: 1
+
+      - name: Create environment file
+        working-directory: ${{ github.workspace }}
+        env:
+          DOT_ENV: ${{ secrets.DOT_ENV }}
+        run: |
+          if [ -z "$DOT_ENV" ]; then
+            echo "DOT_ENV secret is missing or empty."
+            exit 1
+          fi
+
+          umask 077
+          printf '%s\n' "$DOT_ENV" > .env
+
+      - name: Build and deploy
+        working-directory: ${{ github.workspace }}
+        run: |
+          sudo docker compose up -d --build --force-recreate
+          echo "Deployment complete."
+
+      - name: Clean up old Docker images
+        run: sudo docker image prune -f
