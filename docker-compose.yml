@@ -1,0 +1,12 @@
+services:
+  leetcode-cron:
+    build: .
+    restart: unless-stopped
+    environment:
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
+      TZ: ${TZ:-UTC}
+    volumes:
+      - leetcode-data:/app/data
+
+volumes:
+  leetcode-data:

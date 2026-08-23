@@ -1,0 +1,15 @@
+{
+  "name": "leetcode-cron-job",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "add-history": "bun run add_history.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  }
+}
