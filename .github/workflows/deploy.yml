@@ -35,10 +35,5 @@ jobs:
           sudo docker compose up -d --build --force-recreate
           echo "Deployment complete."
 
-      - name: Seed completed history
-        working-directory: ${{ github.workspace }}
-        run: |
-          sudo docker compose exec -T leetcode-cron bun run scripts/add_history.ts --file completed-list.txt
-
       - name: Clean up old Docker images
         run: sudo docker image prune -f
