@@ -19,15 +19,15 @@ jobs:
       - name: Create environment file
         working-directory: ${{ github.workspace }}
         env:
-          DOT_ENV: ${{ secrets.DOT_ENV }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          if [ -z "$DOT_ENV" ]; then
-            echo "DOT_ENV secret is missing or empty."
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL secret is missing or empty."
             exit 1
           fi
 
           umask 077
-          printf '%s\n' "$DOT_ENV" > .env
+          printf 'DISCORD_WEBHOOK_URL=%s\n' "$DISCORD_WEBHOOK_URL" > .env
 
       - name: Build and deploy
         working-directory: ${{ github.workspace }}
