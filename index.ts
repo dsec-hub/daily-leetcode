@@ -22,4 +22,4 @@ async function dailyJob() {
 
 Bun.cron("0 9 * * *", async () => {
   dailyJob();
-});
+}, { tz: "Australia/Sydney" });
