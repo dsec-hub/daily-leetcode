@@ -6,9 +6,8 @@ import { postToDiscord } from "./lib/webhook"
 
 async function getDifficulty(): Promise<Difficulty> {
   let d = new Date();
-  let day = d.getDay() + 1;
-  // 1 = Monday
-  // 7 = Sunday
+  let day = d.getDay();
+  // 0 - 6 = Sunday - Saturday
   if (day == 5 || day == 6) {
     return 'Medium'
   }
