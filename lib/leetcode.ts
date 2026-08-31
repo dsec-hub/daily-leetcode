@@ -10,9 +10,11 @@ export type Problem = {
   url: string
 }
 
+export type Difficulty = "Easy" | "Medium" | "Hard";
+
 // https://github.com/noworneverev/leetcode-api
-async function randomProblem() {
-  const { data, error } = await tryCatch(fetch("https://leetcode-api-pied.vercel.app/random?difficulty=Easy"));
+async function randomProblem(difficulty: Difficulty) {
+  const { data, error } = await tryCatch(fetch(`https://leetcode-api-pied.vercel.app/random?difficulty=${difficulty}`));
   if (error) {
     return null;
   }
@@ -23,8 +25,8 @@ async function randomProblem() {
   return response;
 }
 
-export async function getUniqueProblem() {
-  let problem = await randomProblem();
+export async function getUniqueProblem(difficulty: Difficulty) {
+  let problem = await randomProblem(difficulty);
 
   if (!problem) {
     console.log("Failed to retrieve random problem")
@@ -35,7 +37,7 @@ export async function getUniqueProblem() {
 
   // keep getting random problems until it's not been done before
   while (exists) {
-    problem = await randomProblem();
+    problem = await randomProblem(difficulty);
 
     if (!problem) {
       console.log("Failed to retrieve random problem")
